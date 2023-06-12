@@ -40,7 +40,7 @@ const loadData=()=>{
         success: (response) => {
             console.log(response);
 
-            for(let tempData of response.data.list){
+          /*  for(let tempData of response.data.list){
                 console.log(tempData)
 
                 let tBody = document.getElementById('t-body');
@@ -53,15 +53,29 @@ const loadData=()=>{
                 let cel5 = row.insertCell();
                 let cel6 = row.insertCell();
 
+                let btn = document.createElement('button');
+                btn.textContent='Delete';
+                cel6.appendChild(btn);
+
+                btn.addEventListener('click', ()=>{
+                    alert('delete');
+                })
+
                 cel1.textContent=`${tempData.publicId}`;
                 cel2.textContent=`${tempData.name}`;
                 cel3.textContent=`${tempData.address}`;
                 cel4.textContent=`${tempData.salary}`;
                 cel5.textContent=`${tempData.activeState}`;
-                cel6.textContent='<button class="btn btn-danger btn-sm">Delete Customer</button>';
 
-            }
+            }*/
 
+            let data = response.data.list;
+            data.forEach((record)=>{
+                let row=$('<tr>');
+                let cell1=$('<td>').text(record.publicId)
+                row.append(cell1);
+                $('#t-body').append(row)
+            })
 
             document.getElementById('loader').style.display='none';
         },
