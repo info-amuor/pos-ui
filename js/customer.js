@@ -126,6 +126,12 @@ let publicId = undefined;
 
 function setDataForCustomer(data) {
     publicId = data.publicId;
+    let btn = $('#saveOrUpdateButton');
+    btn.removeClass('btn-primary');
+    btn.addClass('btn-success');
+    btn.text('Update Customer : ('+data.publicId+')');
+    console.log(btn.text());
+
     $('#name').val(data.name);
     $('#address').val(data.address);
     $('#salary').val(data.salary);
