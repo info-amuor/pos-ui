@@ -71,9 +71,24 @@ const loadData=()=>{
 
             let data = response.data.list;
             data.forEach((record)=>{
+                let btn=$('<button>').text('Delete Customer');
+                btn.addClass('btn');
+                btn.addClass('btn-danger');
+                btn.addClass('btn-sm');
+
+                btn.click(()=>{
+                    deleteCustomer(record.publicId);
+                })
+
                 let row=$('<tr>');
                 let cell1=$('<td>').text(record.publicId)
-                row.append(cell1);
+                let cell2=$('<td>').text(record.name)
+                let cell3=$('<td>').text(record.address)
+                let cell4=$('<td>').text(record.salary)
+                let cell5=$('<td>').text(record.activeState)
+                let cell6=$('<td>').append(btn);
+
+                row.append(cell1,cell2,cell3,cell4,cell5,cell6);
                 $('#t-body').append(row)
             })
 
@@ -87,3 +102,6 @@ const loadData=()=>{
     });
 }
 
+function deleteCustomer(id) {
+    console.log(id)
+}
