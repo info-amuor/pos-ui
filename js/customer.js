@@ -42,9 +42,24 @@ const loadData=()=>{
 
             for(let tempData of response.data.list){
                 console.log(tempData)
-                let tempRow=`<tr><td>${tempData.publicId}</td><td>${tempData.name}</td><td>${tempData.address}</td><td>${tempData.salary}</td><td>${tempData.activeState}</td><td><button class="btn btn-danger btn-sm">Delete Customer</button></td></tr>`;
-                let rowData = document.createElement(tempRow);
-                document.getElementById('t-body').appendChild(rowData);
+
+                let tBody = document.getElementById('t-body');
+                let row = tBody.insertRow();
+
+                let cel1 = row.insertCell();
+                let cel2 = row.insertCell();
+                let cel3 = row.insertCell();
+                let cel4 = row.insertCell();
+                let cel5 = row.insertCell();
+                let cel6 = row.insertCell();
+
+                cel1.textContent=`${tempData.publicId}`;
+                cel2.textContent=`${tempData.name}`;
+                cel3.textContent=`${tempData.address}`;
+                cel4.textContent=`${tempData.salary}`;
+                cel5.textContent=`${tempData.activeState}`;
+                cel6.textContent='<button class="btn btn-danger btn-sm">Delete Customer</button>';
+
             }
 
 
@@ -57,3 +72,4 @@ const loadData=()=>{
         }
     });
 }
+
