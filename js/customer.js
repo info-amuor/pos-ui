@@ -129,7 +129,8 @@ function setDataForCustomer(data) {
     let btn = $('#saveOrUpdateButton');
     btn.removeClass('btn-primary');
     btn.addClass('btn-success');
-    btn.text('Update Customer : ('+data.publicId+')');
+    btn.html('Update Customer : ('+data.publicId+')');
+    //document.getElementById('saveOrUpdateButton').innerHTML='Update Customer : ('+data.publicId+')'
     console.log(btn.text());
 
     $('#name').val(data.name);
