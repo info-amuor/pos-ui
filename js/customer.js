@@ -68,6 +68,7 @@ const loadData = (page,size) => {
 }
 
 function displayData(data) {
+    $('#t-body').empty();
     data.forEach((record) => {
         let btn = $('<button>').text('Delete Customer');
         btn.addClass('btn');
