@@ -47,7 +47,7 @@ const loadData = (page,size) => {
             displayData(data);
 
 
-            $('#pagination-context').pagination({
+          /*  $('#pagination-context').pagination({
                 dataSource:response.data.dataCount,
                 pageSize:size,
                 pageNumber:page,
@@ -55,7 +55,7 @@ const loadData = (page,size) => {
                     page = pagination.pageNumber;
                     loadData(page,size);
                 }
-            });
+            });*/
 
 
         },
@@ -94,7 +94,21 @@ function displayData(data) {
 }
 
 function deleteCustomer(id) {
-    console.log(id)
+    document.getElementById('loader').style.display = 'flex';
+    $.ajax({
+        url: 'http://localhost:8001/api/v1/customers?id='+id,
+        contentType: 'application/json',
+        method: 'DELETE',
+        success: (response) => {
+            toastr.success('Successfully Deleted.')
+            loadData(page,size);
+        },
+        error: (error) => {
+            document.getElementById('loader').style.display = 'none';
+            console.error('This is an Error', error)
+            toastr.error('Error.')
+        }
+    });
 }
 
 
