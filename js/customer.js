@@ -39,6 +39,15 @@ const loadData=()=>{
         method: 'GET',
         success: (response) => {
             console.log(response);
+
+            for(let tempData of response.data.list){
+                console.log(tempData)
+                let tempRow=`<tr><td>${tempData.publicId}</td><td>${tempData.name}</td><td>${tempData.address}</td><td>${tempData.salary}</td><td>${tempData.activeState}</td><td><button class="btn btn-danger btn-sm">Delete Customer</button></td></tr>`;
+                let rowData = document.createElement(tempRow);
+                document.getElementById('t-body').appendChild(rowData);
+            }
+
+
             document.getElementById('loader').style.display='none';
         },
         error: (error) => {
