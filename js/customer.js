@@ -32,10 +32,10 @@ const createOrUpdateCustomer = () => {
 
 }
 
-let page=0;
-let size=10;
+let page = 0;
+let size = 10;
 
-const loadData = (page,size) => {
+const loadData = (page, size) => {
     document.getElementById('loader').style.display = 'flex';
     $.ajax({
         url: 'http://localhost:8001/api/v1/customers/list?page=0&size=10&searchText=',
@@ -47,15 +47,15 @@ const loadData = (page,size) => {
             displayData(data);
 
 
-          /*  $('#pagination-context').pagination({
-                dataSource:response.data.dataCount,
-                pageSize:size,
-                pageNumber:page,
-                callback:function (data,pagination){
-                    page = pagination.pageNumber;
-                    loadData(page,size);
-                }
-            });*/
+            /*  $('#pagination-context').pagination({
+                  dataSource:response.data.dataCount,
+                  pageSize:size,
+                  pageNumber:page,
+                  callback:function (data,pagination){
+                      page = pagination.pageNumber;
+                      loadData(page,size);
+                  }
+              });*/
 
 
         },
@@ -70,13 +70,22 @@ const loadData = (page,size) => {
 function displayData(data) {
     $('#t-body').empty();
     data.forEach((record) => {
-        let btn = $('<button>').text('Delete Customer');
-        btn.addClass('btn');
-        btn.addClass('btn-danger');
-        btn.addClass('btn-sm');
+        let btnDelete = $('<button>').text('Delete Customer');
+        let btnUpdate = $('<button>').text('Update Customer');
+        btnDelete.addClass('btn');
+        btnDelete.addClass('btn-danger');
+        btnDelete.addClass('btn-sm');
+        btnUpdate.addClass('btn');
+        btnUpdate.addClass('btn-warning');
+        btnUpdate.addClass('btn-sm');
 
-        btn.click(() => {
-            deleteCustomer(record.publicId);
+        btnDelete.click(() => {
+            if (confirm('are you sure?')) {
+                deleteCustomer(record.publicId);
+            }
+        })
+        btnUpdate.click(() => {
+            setDataForCustomer(record);
         })
 
         let row = $('<tr>');
@@ -85,9 +94,10 @@ function displayData(data) {
         let cell3 = $('<td>').text(record.address)
         let cell4 = $('<td>').text(record.salary)
         let cell5 = $('<td>').text(record.activeState)
-        let cell6 = $('<td>').append(btn);
+        let cell6 = $('<td>').append(btnDelete);
+        let cell7 = $('<td>').append(btnUpdate);
 
-        row.append(cell1, cell2, cell3, cell4, cell5, cell6);
+        row.append(cell1, cell2, cell3, cell4, cell5, cell6, cell7);
         $('#t-body').append(row)
     })
 
@@ -97,12 +107,12 @@ function displayData(data) {
 function deleteCustomer(id) {
     document.getElementById('loader').style.display = 'flex';
     $.ajax({
-        url: 'http://localhost:8001/api/v1/customers?id='+id,
+        url: 'http://localhost:8001/api/v1/customers?id=' + id,
         contentType: 'application/json',
         method: 'DELETE',
         success: (response) => {
             toastr.success('Successfully Deleted.')
-            loadData(page,size);
+            loadData(page, size);
         },
         error: (error) => {
             document.getElementById('loader').style.display = 'none';
@@ -112,21 +122,14 @@ function deleteCustomer(id) {
     });
 }
 
+let publicId = undefined;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function setDataForCustomer(data) {
+    publicId = data.publicId;
+    $('#name').val(data.name);
+    $('#address').val(data.address);
+    $('#salary').val(data.salary);
+}
 
 
 /*  for(let tempData of response.data.list){
